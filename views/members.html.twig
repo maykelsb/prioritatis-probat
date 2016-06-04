@@ -1,0 +1,43 @@
+{% extends "layout/main.html.twig" %}
+{% set active_page = 'get_members' %}
+{% block title %}::Membros{% endblock %}
+{% block body %}
+    <div class="page-header">
+        <h1>Membros</h1>
+    </div>
+    <div class="btn-group pull-right" role="group">
+        <button type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Novo membro
+        </button>
+    </div>
+    <br style="clear:both" />
+    <br />
+    {% if members is not empty %}
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Nome</th>
+                <th>Data afiliação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>-</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.affiliation }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="text-right">Número de membros:</td>
+                <td>{{ qtd_users }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+        <div class="alert alert-info text-center">Nenhum membro cadastrado.</div>
+    {% endif %}
+{% endblock %}

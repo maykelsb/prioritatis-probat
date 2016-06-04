@@ -1,0 +1,57 @@
+{% set navigation_bar = [['index', 'Home'], ['get_members', 'Membros'], ['get_meetups', 'Encontros'], ['get_about', 'About']] %}
+{% set active_page = active_page|default('index') %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>pProbat{% block title %}{% endblock %}</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="/css/jumbotron-narrow.css" rel="stylesheet">
+        <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container">
+            <div class="header clearfix">
+                <nav>
+                    {% block navigation %}
+                    <ul class="nav nav-pills pull-right">
+                        {% for item in navigation_bar %}
+                        <li{% if item[0] == active_page %} class="active"{% endif%}>
+                        <a href="{{ app.url_generator.generate(item[0]) }}">{{item[1]}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endblock %}
+                </nav>
+                <h3 class="text-muted">pProbat</h3>
+            </div>
+            {% block jumbotron %}{% endblock %}
+            {% block body %}{% endblock %}
+            <footer class="footer">
+                <p>&copy; 2016 Forja D&C, Inc.</p>
+            </footer>
+        </div> <!-- /container -->
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    </body>
+</html>
