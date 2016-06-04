@@ -1,0 +1,17 @@
+{
+  "name": "pprobat",
+  "homepage": "https://github.com/maykelsb/prioritatis-probat",
+  "description": "pProbat is a program use to control test frequency of projects, based on users collaboration",
+  "main": "",
+  "keywords": [
+    "gamedesign"
+  ],
+  "authors": [
+    "Maykel S. Braz"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
