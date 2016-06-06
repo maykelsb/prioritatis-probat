@@ -13,7 +13,7 @@
     <br style="clear:both" />
     <br />
     {% if members is not empty %}
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -24,16 +24,22 @@
         <tbody>
             {% for member in members %}
             <tr>
-                <td>-</td>
+                <td>
+                    <button class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button class="btn btn-success btn-xs">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                </td>
                 <td>{{ member.name }}</td>
-                <td>{{ member.affiliation }}</td>
+                <td>{{ member.affiliation|date('d/m/Y') }}</td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="2" class="text-right">Número de membros:</td>
-                <td>{{ qtd_users }}</td>
+                <td colspan="4" class="text-right">Número de membros: {{ num_members }}</td>
             </tr>
         </tfoot>
     </table>
