@@ -14,4 +14,6 @@ ALTER TABLE `pprobat`.`user`
 ADD COLUMN `affiliation` DATETIME NOT NULL AFTER `roles`,
 ADD COLUMN `creation` TIMESTAMP NOT NULL DEFAULT current_timestamp AFTER `affiliation`;
 ---
-
+ALTER TABLE `pprobat`.`user` 
+ADD COLUMN `about` TEXT NULL AFTER `creation`;
+---
