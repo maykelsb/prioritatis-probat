@@ -84,12 +84,14 @@ class MemberControllerProvider implements ControllerProviderInterface
 
     protected function viewMember()
     {
-        $this->cc->get('/view/{id}', function(){
+        $this->cc->get('/view/{member}', function($member){
             return $this->app['twig']->render('members/view.html.twig', [
-                'member' => []
+                'member' => $member
             ]);
 
-        })->bind('view_member');
+        })->bind('view_member')
+        ->convert('member', 'converter.user:convert');
+
         return $this;
     }
 

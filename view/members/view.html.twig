@@ -3,7 +3,17 @@
 {% block title %}::Membros{% endblock %}
 {% block body %}
     {% if member is empty %}
-        {{ "Membro não encontrado!"|bt_alert('warning') }}        
+        {{ "Membro não encontrado!"|e|bt_alert('danger') }}        
     {% else %}
+        <dl class="dl-horizontal">
+            <dt>Usuário:</dt>
+            <dd>{{ member.username }}</dd>
+            <dt>Nome completo:</dt>
+            <dd>{{ member.name }}</dd>
+            <dt>Membro desde:</dt>
+            <dd>{{ member.affiliation|date('d/m/Y') }}</dd>
+            <dt>About:</dt>
+            <dd>{{ member.about|e }}</dd>
+        </dl>
     {% endif %}
 {% endblock %}
