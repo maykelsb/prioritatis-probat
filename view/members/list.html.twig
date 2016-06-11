@@ -18,6 +18,8 @@
             <tr>
                 <th>&nbsp;</th>
                 <th>Nome</th>
+                <th>Karma</th>
+                <th>Status</th>
                 <th>Data afiliação</th>
             </tr>
         </thead>
@@ -33,13 +35,15 @@
                     </button>
                 </td>
                 <td>{{ member.name }}</td>
+                <td>???</td>
+                <td><span class="label label-success">ativo</span></td>
                 <td>{{ member.affiliation|date('d/m/Y') }}</td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4" class="text-right">Número de membros: {{ num_members }}</td>
+                <td colspan="6" class="text-right">Número de membros: {{ members|length }}</td>
             </tr>
         </tfoot>
     </table>
