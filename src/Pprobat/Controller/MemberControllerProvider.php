@@ -61,7 +61,7 @@ class MemberControllerProvider implements ControllerProviderInterface
             if (!$form->isValid() || !$form->isSubmitted()) {
 
                 $this->app['session']->getFlashBag()->add(
-                    'error', 'Não foi possível processar sua requisição.'
+                    'danger', 'Não foi possível processar sua requisição.'
                 );
 
                 return $this->app['twig']->render('members/form.html.twig', [
@@ -72,12 +72,13 @@ class MemberControllerProvider implements ControllerProviderInterface
             $data = $form->getData();
             $this->filterData($data);
             $data['affiliation'] = $data['affiliation']->format('Y-m-d');
+            $data['creation'] = $data['creation']->format('Y-m-d');
 
             if (is_null($member)) {
                 $this->app['db']->insert('user', $data);
                 $member = $this->app['db']->lastInsertId();
             } else {
-                $this->app['db']->update('user', $data, ['id' => $member]);
+                $this->app['db']->update('user', $data, ['id' => $member['id']]);
             }
 
             $this->app['session']->getFlashBag()->add(
@@ -87,7 +88,7 @@ class MemberControllerProvider implements ControllerProviderInterface
             return $this->app->redirect(
                 $this->app['url_generator']->generate(
                     'member_view',
-                    ['member' => $member]
+                    ['member' => $member['id']]
                 )
             );
         })->bind('member_edit')
