@@ -9,9 +9,6 @@ use Pprobat\Controller\AboutControllerProvider;
 
 use Pprobat\Twig\Extension\Bootstrap;
 
-use Pprobat\Form\Type\MemberType;
-
-use Pprobat\Service\Converter\UserConverter;
 
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -24,6 +21,21 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.templates' => ['bootstrap_3_layout.html.twig']
 ])->extend('twig', function($twig){
     $twig->addExtension(new Bootstrap());
+    $twig->addFilter(new Twig_SimpleFilter('meetuptype', function($type){
+        switch ($type) {
+            case 'P':
+                return '<span class="label label-success">principal</span>';
+                break;
+            case 'S':
+                return '<span class="label label-warning">especial</span>';
+                break;
+            case 'O':
+                return '<span class="label label-default">outro</span>';
+                break;
+            default:
+                return '<span class="label label-danger">???</span>';
+        }
+    }, ['is_safe' => ['html']]));
     return $twig;
 });
 
@@ -40,16 +52,19 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translator.messages' => array(),
     'locale' => 'pt_BR'
 ));
-$app->register(new Silex\Provider\FormServiceProvider(), []);
+$app->register(new Silex\Provider\FormServiceProvider());
 $app['form.types'] = $app->extend('form.types', function ($types) use ($app) {
-    $types[] = new MemberType();
+    $types[] = new Pprobat\Form\Type\MemberType();
 
     return $types;
 });
 
 // -- Converters
 $app['converter.user'] = function () use ($app) {
-    return new UserConverter($app['db']);
+    return new \Pprobat\Service\Converter\UserConverter($app['db']);
+};
+$app['converter.meetup'] = function() use ($app){
+    return new \Pprobat\Service\Converter\MeetupConverter($app['db']);
 };
 
 // -- Controllers

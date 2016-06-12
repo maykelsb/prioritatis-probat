@@ -7,33 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Pprobat\Form\Type\MemberType;
 
-class MemberControllerProvider implements ControllerProviderInterface
+class MemberControllerProvider extends AbstractControllerProvider
 {
-    /**
-     * @var Silex\Application
-     */
-    protected $app;
-    /**
-     * @var Silex\ControllerCollection
-     */
-    protected $cc;
-
-    /**
-     * Stablish routes for this controller.
-     *
-     * @param Silex\Application $app
-     * @return Silex\ControllerCollection
-     */
-    public function connect(Application $app)
+    protected function enableRoutes()
     {
-        $this->app = $app;
-        $this->cc = $app['controllers_factory'];
-
         $this->listMembers()
             ->editMember()
             ->viewMember();
-
-        return $this->cc;
     }
 
     protected function listMembers()
@@ -60,9 +40,11 @@ class MemberControllerProvider implements ControllerProviderInterface
 
             if (!$form->isValid() || !$form->isSubmitted()) {
 
-                $this->app['session']->getFlashBag()->add(
-                    'danger', 'Não foi possível processar sua requisição.'
-                );
+                if ($form->isSubmitted()) {
+                    $this->app['session']->getFlashBag()->add(
+                        'danger', 'Não foi possível processar sua requisição.'
+                    );
+                }
 
                 return $this->app['twig']->render('members/form.html.twig', [
                     'form' => $form->createView()
@@ -111,8 +93,10 @@ class MemberControllerProvider implements ControllerProviderInterface
         return $this;
     }
 
-
-    protected function filterData(&$data)
+    /**
+     * {@inheritdoc}
+     */
+    protected function filterData(array &$data)
     {
         filter_var_array($data, [
             'name' => [FILTER_SANITIZE_MAGIC_QUOTES, FILTER_SANITIZE_STRING],

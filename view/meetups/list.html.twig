@@ -1,3 +1,66 @@
 {% extends "layout/main.html.twig" %}
-{% set active_page = 'get_meetups' %}
+{% set active_page = 'meetups_list' %}
 {% block title %}::Encontros{% endblock %}
+{% block body %}
+    <div class="page-header">
+        <h1>Encontros</h1>
+    </div>
+    <div class="btn-group pull-right" role="group">
+        <button type="button" class="btn btn-primary meetup-new">
+            {{ bt_glyph('plus') }}&nbsp;Novo encontro
+        </button>
+    </div>
+    <br style="clear:both" />
+    <br />
+    {% if meetups is not empty %}
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Meetup</th>
+                <th>Local</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meetup in meetups %}
+            <tr data-id="{{ meetup.id }}">
+                <td>
+{#                    <button class="btn btn-danger btn-xs meetup-remove">
+                        {{ bt_glyph('remove') }}
+                    </button>#}
+                    <button class="btn btn-success btn-xs meetup-view">
+                        {{ bt_glyph('eye-open') }}
+                    </button>
+                    <button class="btn btn-primary btn-xs meetup-edit">
+                        {{ bt_glyph('pencil') }}
+                    </button>
+                </td>
+                <td>{{ meetup.title|e }}</td>
+                <td>{{ meetup.local|e }}</td>
+                <td class="text-right">{{ meetup.happening|date('d/m/Y H:i')}}</td>
+                <td class="text-center">{{ meetup.meetuptype|e|meetuptype }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-right">Número de encontros: {{ meetups|length }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+        <div class="alert alert-info text-center">Nenhum encontro cadastrado.</div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+$('.meetup-new').click(function(){
+    window.location.assign('{{ app.url_generator.generate('meetup_edit') }}');
+});
+$('.meetup-view').click(function(){
+    window.location.assign('/meetups/view/' + $(this).parents('tr').eq(0).attr('data-id'));
+});
+$('.meetup-edit').click(function(){
+    window.location.assign('/meetups/edit/' + $(this).parents('tr').eq(0).attr('data-id'));
+});
+{% endblock %}

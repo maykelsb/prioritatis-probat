@@ -1,0 +1,21 @@
+{% extends "layout/main.html.twig" %}
+{% set active_page = 'meetups_list' %}
+{% block title %}::Meetups{% endblock %}
+{% block body %}
+    {% if meetup is empty %}
+        {{ "Meetup não encontrado!"|e|bt_alert('danger') }}        
+    {% else %}
+        <dl class="dl-horizontal">
+            <dt>Título:</dt>
+            <dd>{{ meetup.title|e }}</dd>
+            <dt>Local:</dt>
+            <dd>{{ meetup.local|e }}</dd>
+            <dt>Quando:</dt>            
+            <dd>{{ meetup.happening|date('d/m/Y H:i') }}</dd>
+            <dt>Tipo do encontro:</dt>
+            <dd>{{ meetup.meetuptype|meetuptype }}</dd>
+            <dt>Observações:</dt>
+            <dd>{{ meetup.notes|e }}</dd>
+        </dl>
+    {% endif %}
+{% endblock %}

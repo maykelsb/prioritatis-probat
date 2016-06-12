@@ -17,3 +17,26 @@ ADD COLUMN `creation` TIMESTAMP NOT NULL DEFAULT current_timestamp AFTER `affili
 ALTER TABLE `pprobat`.`user` 
 ADD COLUMN `about` TEXT NULL AFTER `creation`;
 ---
+CREATE TABLE `pprobat`.`meetup` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `publicnumber` INT NULL COMMENT 'Meetup’s number for admin control',
+  `local` VARCHAR(45) NOT NULL,
+  `localinstructions` TEXT NULL COMMENT 'Instructions to reach the local',
+  `when` DATETIME NOT NULL,
+  `report` TEXT NULL COMMENT 'Report about what happened at the meetup',
+  `meetuptype` CHAR(1) NOT NULL DEFAULT 'P' COMMENT 'Meetup’s type: (P)rimary, (S)pecial or (O)ther',
+  `creation` TIMESTAMP NULL,
+  PRIMARY KEY (`id`));
+---
+ALTER TABLE `pprobat`.`meetup` 
+CHANGE COLUMN `creation` `creation` TIMESTAMP NOT NULL DEFAULT current_timestamp ;
+---
+ALTER TABLE `pprobat`.`meetup` 
+CHANGE COLUMN `localinstructions` `notes` TEXT NULL DEFAULT NULL COMMENT 'free text for observations' ;
+---
+ALTER TABLE `pprobat`.`meetup` 
+CHANGE COLUMN `publicnumber` `title` VARCHAR(255) NOT NULL COMMENT 'Meetup’s number for admin control' ;
+---
+ALTER TABLE `pprobat`.`meetup` 
+CHANGE COLUMN `when` `happening` DATETIME NOT NULL COMMENT 'When the meet up will take place' ;
+---
