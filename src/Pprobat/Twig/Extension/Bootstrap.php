@@ -25,7 +25,9 @@ class Bootstrap extends \Twig_Extension
     {
         return new \Twig_SimpleFilter('bt_alert', function($string, array $options = []){
             if (!in_array($options[0], ['danger', 'info', 'warning', 'default', 'success'])) {
-                throw new \Twig_Error_Syntax('Only "danger", "info", "warning", "default" and "success" are valid params for bt_alert.');
+                $msg = 'Only "danger", "info", "warning", "default" and "success" are valid params for bt_alert.';
+                $msg .= ' "' . $options[0] . '" received.';
+                throw new \Twig_Error_Syntax($msg);
             }
 
             return <<<HTML
