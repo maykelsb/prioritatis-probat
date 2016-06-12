@@ -44,7 +44,7 @@ class MemberControllerProvider implements ControllerProviderInterface
             return $this->app['twig']->render('members/list.html.twig', [
                 'members' => $members
             ]);
-        })->bind('get_members');
+        })->bind('members_list');
 
         return $this;
     }
@@ -59,6 +59,11 @@ class MemberControllerProvider implements ControllerProviderInterface
             $form->handleRequest($request);
 
             if (!$form->isValid() || !$form->isSubmitted()) {
+
+                $this->app['session']->getFlashBag()->add(
+                    'error', 'Não foi possível processar sua requisição.'
+                );
+
                 return $this->app['twig']->render('members/form.html.twig', [
                     'form' => $form->createView()
                 ]);
@@ -75,8 +80,17 @@ class MemberControllerProvider implements ControllerProviderInterface
                 $this->app['db']->update('user', $data, ['id' => $id]);
             }
 
-            return $this->app->redirect("/members/{$id}");
-        })->bind('edit_member')
+            $this->app['session']->getFlashBag()->add(
+                'success', 'Requisição processada com sucesso.'
+            );
+
+            return $this->app->redirect(
+                $this->app['url_generator']->generate(
+                    'member_view',
+                    ['member' => $id]
+                )
+            );
+        })->bind('member_edit')
             ->value('id', null);
 
         return $this;
@@ -89,7 +103,7 @@ class MemberControllerProvider implements ControllerProviderInterface
                 'member' => $member
             ]);
 
-        })->bind('view_member')
+        })->bind('member_view')
         ->convert('member', 'converter.user:convert');
 
         return $this;

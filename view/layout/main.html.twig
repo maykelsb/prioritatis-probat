@@ -1,4 +1,4 @@
-{% set navigation_bar = [['index', 'Home'], ['get_members', 'Membros'], ['get_meetups', 'Encontros'], ['get_about', 'About']] %}
+{% set navigation_bar = [['index', 'Home'], ['members_list', 'Membros'], ['get_meetups', 'Encontros'], ['get_about', 'About']] %}
 {% set active_page = active_page|default('index') %}
 
 <!DOCTYPE html>
@@ -46,6 +46,14 @@
                 <h3 class="text-muted">pProbat</h3>
             </div>
             {% block jumbotron %}{% endblock %}
+            {# Flash message #}
+{#            {% if app.request.hasPreviousSession and app.session.flashBag.peekAll()|length > 0 %}
+                {% for type, messages in app.session.flashBag.all() %}
+                    {% for message in messages %}
+                        {{ message|bt_alert(type) }}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}#}
             {% block body %}{% endblock %}
             <footer class="footer">
                 <p>&copy; 2016 Forja D&C, Inc.</p>
@@ -53,5 +61,14 @@
         </div> <!-- /container -->
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootbox.js"></script>
+        {% block javascripts_includes %}{% endblock %}
+        <script type="text/javascript">
+        $(function(){
+            {% block javascripts %}{% endblock %}  
+        });
+        </script>
     </body>
 </html>

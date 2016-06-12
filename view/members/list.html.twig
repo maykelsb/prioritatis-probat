@@ -6,7 +6,7 @@
         <h1>Membros</h1>
     </div>
     <div class="btn-group pull-right" role="group">
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary member-new">
             <span class="glyphicon glyphicon-plus"></span>&nbsp;Novo membro
         </button>
     </div>
@@ -27,12 +27,9 @@
             {% for member in members %}
             <tr>
                 <td>
-                    <button class="btn btn-danger btn-xs">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                    <button class="btn btn-success btn-xs">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                    </button>
+                    <button class="btn btn-danger btn-xs">{{ bt_glyph('remove') }}</button>
+                    <button class="btn btn-success btn-xs">{{ bt_glyph('eye-open') }}</button>
+                    <button class="btn btn-primary btn-xs">{{ bt_glyph('pencil') }}</button>
                 </td>
                 <td>{{ member.name }}</td>
                 <td>???</td>
@@ -50,4 +47,9 @@
     {% else %}
         <div class="alert alert-info text-center">Nenhum membro cadastrado.</div>
     {% endif %}
+{% endblock %}
+{% block javascripts %}
+$('.member-new').click(function(){
+    window.location.assign('{{ app.url_generator.generate('member_edit') }}');
+});
 {% endblock %}
