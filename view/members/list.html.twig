@@ -1,5 +1,5 @@
 {% extends "layout/main.html.twig" %}
-{% set active_page = 'get_members' %}
+{% set active_page = 'members_list' %}
 {% block title %}::Membros{% endblock %}
 {% block body %}
     <div class="page-header">
@@ -13,10 +13,11 @@
     <br style="clear:both" />
     <br />
     {% if members is not empty %}
-    <table class="table table-striped">
+    <table class="table table-striped table-hover table-condensed">
         <thead>
             <tr>
                 <th>&nbsp;</th>
+                <th>Usuário</th>
                 <th>Nome</th>
                 <th>Karma</th>
                 <th>Status</th>
@@ -25,16 +26,23 @@
         </thead>
         <tbody>
             {% for member in members %}
-            <tr>
+            <tr data-id="{{ member.id }}">
                 <td>
-                    <button class="btn btn-danger btn-xs">{{ bt_glyph('remove') }}</button>
-                    <button class="btn btn-success btn-xs">{{ bt_glyph('eye-open') }}</button>
-                    <button class="btn btn-primary btn-xs">{{ bt_glyph('pencil') }}</button>
+{#                    <button class="btn btn-danger btn-xs member-remove">
+                        {{ bt_glyph('remove') }}
+                    </button>#}
+                    <button class="btn btn-success btn-xs member-view">
+                        {{ bt_glyph('eye-open') }}
+                    </button>
+                    <button class="btn btn-primary btn-xs member-edit">
+                        {{ bt_glyph('pencil') }}
+                    </button>
                 </td>
+                <td>{{ member.username }}</td>
                 <td>{{ member.name }}</td>
-                <td>???</td>
+                <td class="text-center">???</td>
                 <td><span class="label label-success">ativo</span></td>
-                <td>{{ member.affiliation|date('d/m/Y') }}</td>
+                <td class="text-right">{{ member.affiliation|date('d/m/Y') }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -51,5 +59,11 @@
 {% block javascripts %}
 $('.member-new').click(function(){
     window.location.assign('{{ app.url_generator.generate('member_edit') }}');
+});
+$('.member-view').click(function(){
+    window.location.assign('/members/view/' + $(this).parents('tr').eq(0).attr('data-id'));
+});
+$('.member-edit').click(function(){
+    window.location.assign('/members/edit/' + $(this).parents('tr').eq(0).attr('data-id'));
 });
 {% endblock %}

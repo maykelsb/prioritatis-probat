@@ -91,6 +91,7 @@ class MemberControllerProvider implements ControllerProviderInterface
                 )
             );
         })->bind('member_edit')
+            ->value('member', null)
             ->convert('member', 'converter.user:convert');
 
         return $this;
