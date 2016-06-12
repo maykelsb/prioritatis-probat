@@ -11,10 +11,14 @@ use Pprobat\Twig\Extension\Bootstrap;
 
 use Pprobat\Form\Type\MemberType;
 
+use Pprobat\Service\Converter\UserConverter;
+
 $app = new Silex\Application();
 $app['debug'] = true;
 
 // -- Providers
+$app->register(new Silex\Provider\SessionServiceProvider());
+
 $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.path' => __DIR__ . '/../view',
     'twig.templates' => ['bootstrap_3_layout.html.twig']
@@ -43,6 +47,12 @@ $app['form.types'] = $app->extend('form.types', function ($types) use ($app) {
     return $types;
 });
 
+// -- Converters
+$app['converter.user'] = function () use ($app) {
+    return new UserConverter($app['db']);
+};
+
+// -- Controllers
 $app->mount('/', new HomeControllerProvider())
     ->mount('/members', new MemberControllerProvider())
     ->mount('/meetups', new MeetupControllerProvider())
