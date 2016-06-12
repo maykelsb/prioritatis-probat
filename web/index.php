@@ -2,14 +2,6 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Pprobat\Controller\HomeControllerProvider;
-use Pprobat\Controller\MemberControllerProvider;
-use Pprobat\Controller\MeetupControllerProvider;
-use Pprobat\Controller\AboutControllerProvider;
-
-use Pprobat\Twig\Extension\Bootstrap;
-
-
 $app = new Silex\Application();
 $app['debug'] = true;
 
@@ -20,7 +12,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.path' => __DIR__ . '/../view',
     'twig.templates' => ['bootstrap_3_layout.html.twig']
 ])->extend('twig', function($twig){
-    $twig->addExtension(new Bootstrap());
+    $twig->addExtension(new Pprobat\Twig\Extension\Bootstrap());
+
+    // -- @Todo: Migrar to a class
     $twig->addFilter(new Twig_SimpleFilter('meetuptype', function($type){
         switch ($type) {
             case 'P':
@@ -68,8 +62,8 @@ $app['converter.meetup'] = function() use ($app){
 };
 
 // -- Controllers
-$app->mount('/', new HomeControllerProvider())
-    ->mount('/members', new MemberControllerProvider())
-    ->mount('/meetups', new MeetupControllerProvider())
-    ->mount('/about', new AboutControllerProvider())
+$app->mount('/', new Pprobat\Controller\HomeControllerProvider())
+    ->mount('/members', new Pprobat\Controller\MemberControllerProvider())
+    ->mount('/meetups', new Pprobat\Controller\MeetupControllerProvider())
+    ->mount('/about', new Pprobat\Controller\AboutControllerProvider())
     ->run();
