@@ -1,0 +1,9 @@
+{% extends "layout/main.html.twig" %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% set active_page = 'games_list' %}
+{% block body %}
+<div class="page-header">
+    <h1>Novo jogo</h1>
+</div>
+{{ form(form) }}
+{% endblock %}

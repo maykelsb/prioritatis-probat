@@ -1,0 +1,62 @@
+{% extends "layout/main.html.twig" %}
+{% set active_page = 'games_list' %}
+{% block title %}::Jogos{% endblock %}
+{% block body %}
+    <div class="page-header">
+        <h1>Jogos</h1>
+    </div>
+    <div class="btn-group pull-right" role="group">
+        <button type="button" class="btn btn-primary game-new">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Novo jogo
+        </button>
+    </div>
+    <br style="clear:both" />
+    <br />
+    {% if games is not empty %}
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Jogo</th>
+                <th>Designer</th>
+                <th>Partidas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+            <tr data-id="{{ game.id }}">
+                <td>
+                    <button class="btn btn-success btn-xs game-view">
+                        {{ bt_glyph('eye-open') }}
+                    </button>
+                    <button class="btn btn-primary btn-xs game-edit">
+                        {{ bt_glyph('pencil') }}
+                    </button>
+                </td>
+                <td>{{ game.name }}</td>
+                <td>{{ game.designer }}</td>
+                <td class="text-center">???</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-right">Número de jogos: {{ games|length }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+        <div class="alert alert-info text-center">Nenhum jogo cadastrado.</div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+$('.game-new').click(function(){
+    window.location.assign('{{ app.url_generator.generate('game_edit') }}');
+});
+$('.game-view').click(function(){
+    window.location.assign('/games/view/' + $(this).parents('tr').eq(0).attr('data-id'));
+});
+$('.game-edit').click(function(){
+    window.location.assign('/games/edit/' + $(this).parents('tr').eq(0).attr('data-id'));
+});
+{% endblock %}

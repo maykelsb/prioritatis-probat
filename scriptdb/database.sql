@@ -40,3 +40,27 @@ CHANGE COLUMN `publicnumber` `title` VARCHAR(255) NOT NULL COMMENT 'Meetup’s n
 ALTER TABLE `pprobat`.`meetup` 
 CHANGE COLUMN `when` `happening` DATETIME NOT NULL COMMENT 'When the meet up will take place' ;
 ---
+CREATE TABLE `pprobat`.`game` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL COMMENT 'Game’s name',
+  `description` TEXT NOT NULL COMMENT 'Game’s description',
+  PRIMARY KEY (`id`));
+---
+CREATE TABLE `pprobat`.`user_game` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user` INT NOT NULL COMMENT 'reference user table',
+  `game` INT NOT NULL COMMENT 'reference game table',
+  PRIMARY KEY (`id`),
+  INDEX `ug_fk_user_idx` (`user` ASC),
+  INDEX `ug_fk_game_idx` (`game` ASC),
+  CONSTRAINT `ug_fk_user`
+    FOREIGN KEY (`user`)
+    REFERENCES `pprobat`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ug_fk_game`
+    FOREIGN KEY (`game`)
+    REFERENCES `pprobat`.`game` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+---

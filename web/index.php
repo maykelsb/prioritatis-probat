@@ -49,21 +49,26 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 $app->register(new Silex\Provider\FormServiceProvider());
 $app['form.types'] = $app->extend('form.types', function ($types) use ($app) {
     $types[] = new Pprobat\Form\Type\MemberType();
+    $types[] = new Pprobat\Form\Type\GameType($app['db']);
 
     return $types;
 });
 
 // -- Converters
 $app['converter.user'] = function () use ($app) {
-    return new \Pprobat\Service\Converter\UserConverter($app['db']);
+    return new Pprobat\Service\Converter\UserConverter($app['db']);
 };
 $app['converter.meetup'] = function() use ($app){
-    return new \Pprobat\Service\Converter\MeetupConverter($app['db']);
+    return new Pprobat\Service\Converter\MeetupConverter($app['db']);
+};
+$app['converter.game'] = function() use ($app){
+    return new Pprobat\Service\Converter\GameConverter($app['db']);
 };
 
 // -- Controllers
 $app->mount('/', new Pprobat\Controller\HomeControllerProvider())
-    ->mount('/members', new Pprobat\Controller\MemberControllerProvider())
     ->mount('/meetups', new Pprobat\Controller\MeetupControllerProvider())
+    ->mount('/members', new Pprobat\Controller\MemberControllerProvider())
+    ->mount('/games', new Pprobat\Controller\GameControllerProvider())
     ->mount('/about', new Pprobat\Controller\AboutControllerProvider())
     ->run();

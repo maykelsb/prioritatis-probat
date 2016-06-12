@@ -40,7 +40,6 @@ DML;
             $form = $this->app['form.factory']
                 ->createBuilder(MeetupType::class, $meetup)
                 ->getForm();
-
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && !$form->isValid()) {
@@ -105,5 +104,9 @@ DML;
             'notes' => [FILTER_SANITIZE_MAGIC_QUOTES, FILTER_SANITIZE_STRING],
             'report' => [FILTER_SANITIZE_MAGIC_QUOTES, FILTER_SANITIZE_STRING],
         ]);
+    }
+
+    protected function prePersist(array &$data) {
+        ;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Pprobat\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 
@@ -14,6 +15,13 @@ abstract class AbstractControllerProvider implements ControllerProviderInterface
      * @var Silex\ControllerCollection
      */
     protected $cc;
+
+    protected $ctrlName;
+
+    public function __construct()
+    {
+        $this->ctrlName = $this->getControllerName();
+    }
 
     /**
      * Stablish routes for this controller.
@@ -31,6 +39,69 @@ abstract class AbstractControllerProvider implements ControllerProviderInterface
         return $this->cc;
     }
 
+    protected function handleForm(Request $request, $initialData)
+    {
+        $form = $this->app['form.factory']
+            ->createBuilder("Pprobat\Form\Type\\{$this->ctrlName}Type", $initialData)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->app['session']->getFlashBag()->add(
+                'danger', 'Não foi possível processar sua requisição.'
+            );
+        }
+
+        $this->ctrlName = strtolower($this->ctrlName);
+        if (!$form->isValid() || !$form->isSubmitted()) {
+            return $this->app['twig']->render("{$this->ctrlName}/form.html.twig", [
+                'form' => $form->createView()
+            ]);
+        }
+
+        $id = $this->persist($form->getData(), $initialData);
+        $this->app['session']->getFlashBag()->add(
+            'success', 'Requisição processada com sucesso.'
+        );
+
+        return $this->app->redirect(
+            $this->app['url_generator']->generate(
+                "{$this->ctrlName}_view",
+                [$this->ctrlName => $id]
+            )
+        );
+    }
+
+    protected function persist($newData, $initialData)
+    {
+        $this->filterData($newData);
+        $this->prePersist($newData);
+
+        if (!isset($initialData['id'])) {
+            $this->app['db']->insert($this->ctrlName, $newData);
+            $id = $this->app['db']->lastInsertId();
+        } else {
+            $this->app['db']->update($this->ctrlName, $newData, ['id' => $initialData['id']]);
+            $id = $initialData['id'];
+        }
+
+        return $id;
+    }
+
+    /**
+     * Find the unique controller name.
+     *
+     * @return string
+     */
+    protected function getControllerName()
+    {
+        return str_replace(
+            'ControllerProvider',
+            '',
+            end(explode('\\', get_class($this)))
+        );
+    }
+
     /**
      * Use this method to turn on all controller routes.
      */
@@ -42,4 +113,9 @@ abstract class AbstractControllerProvider implements ControllerProviderInterface
      * @param array $data Data do be sanitized.
      */
     abstract protected function filterData(array &$data);
+
+    /**
+     * Handle data before doing persistence.
+     */
+    abstract protected function prePersist(array &$data);
 }

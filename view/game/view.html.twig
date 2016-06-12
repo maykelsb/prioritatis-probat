@@ -1,0 +1,17 @@
+{% extends "layout/main.html.twig" %}
+{% set active_page = 'games_list' %}
+{% block title %}::Jogos{% endblock %}
+{% block body %}
+    {% if game is empty %}
+        {{ "Jogo não encontrado!"|e|bt_alert('danger') }}        
+    {% else %}
+        <dl class="dl-horizontal">
+            <dt>Nome do jogo:</dt>
+            <dd>{{ game.name|e }}</dd>
+            <dt>Designer:</dt>
+            <dd>{{ game.designers.name|e }}</dd>
+            <dt>Descrição:</dt>
+            <dd>{{ game.description|e }}</dd>
+        </dl>
+    {% endif %}
+{% endblock %}

@@ -1,8 +1,6 @@
 <?php
 namespace Pprobat\Controller;
 
-use Silex\Application;
-use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 use Pprobat\Form\Type\MemberType;
@@ -104,5 +102,9 @@ class MemberControllerProvider extends AbstractControllerProvider
             'username' => [FILTER_SANITIZE_MAGIC_QUOTES],
             'password' => [FILTER_SANITIZE_MAGIC_QUOTES],
         ]);
+    }
+
+    protected function prePersist(array &$data) {
+        ;
     }
 }
