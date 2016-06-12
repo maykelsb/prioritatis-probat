@@ -1,6 +1,6 @@
 <?php
 /**
- * A user converter.
+ * A member converter.
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */
@@ -8,9 +8,9 @@
 namespace Pprobat\Service\Converter;
 
 /**
- * Implements a converter to transform an userid in a row with all user data.
+ * Implements a converter to transform an memberid in a row with all member data.
  */
-class UserConverter
+class MemberConverter
 {
     protected $db;
 
@@ -26,7 +26,7 @@ class UserConverter
 
         $query = <<<DML
 SELECT *
-  FROM user
+  FROM member
   WHERE id = ?
 DML;
 

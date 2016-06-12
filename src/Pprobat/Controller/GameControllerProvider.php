@@ -25,8 +25,8 @@ SELECT g.id,
        g.name,
        u.name AS designer
   FROM game g
-    INNER JOIN user_game ug ON(g.id = ug.game)
-    INNER JOIN user u ON(u.id = ug.user)
+    INNER JOIN member_game ug ON(g.id = ug.game)
+    INNER JOIN member u ON(u.id = ug.member)
 DML;
             $games = $this->app['db']->fetchAll($sql);
             return $this->app['twig']->render('game/list.html.twig', [
@@ -79,9 +79,9 @@ DML;
             $gameId = $initialData['id'];
             $this->app['db']->update($this->ctrlName, $newData, ['id' => $gameId]);
 
-            $this->app['db']->delete('user_game', ['game' => $gameId]);
+            $this->app['db']->delete('member_game', ['game' => $gameId]);
         }
-        $this->app['db']->insert('user_game', [
+        $this->app['db']->insert('member_game', [
             'game' => $gameId,
             'user' => $designer
         ]);

@@ -64,3 +64,20 @@ CREATE TABLE `pprobat`.`user_game` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 ---
+ALTER TABLE `pprobat`.`user` 
+RENAME TO  `pprobat`.`member` ;
+---
+ALTER TABLE `pprobat`.`user_game` 
+RENAME TO  `pprobat`.`member_game` ;
+---
+ALTER TABLE `pprobat`.`member_game` 
+DROP FOREIGN KEY `ug_fk_user`;
+ALTER TABLE `pprobat`.`member_game` 
+CHANGE COLUMN `user` `member` INT(11) NOT NULL COMMENT 'reference member table' ;
+ALTER TABLE `pprobat`.`member_game` 
+ADD CONSTRAINT `ug_fk_user`
+  FOREIGN KEY (`member`)
+  REFERENCES `pprobat`.`member` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+---

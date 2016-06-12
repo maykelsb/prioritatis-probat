@@ -28,8 +28,8 @@ SELECT g.*,
        u.id AS designerid,
        u.name AS designer
   FROM game g
-    INNER JOIN user_game ug ON (g.id = ug.game)
-    INNER JOIN user u ON (ug.user = u.id)
+    INNER JOIN member_game ug ON (g.id = ug.game)
+    INNER JOIN member u ON (ug.member = u.id)
   WHERE g.id = ?
 DML;
 

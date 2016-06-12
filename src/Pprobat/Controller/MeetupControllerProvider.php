@@ -1,7 +1,6 @@
 <?php
 namespace Pprobat\Controller;
 
-use Pprobat\Form\Type\MeetupType;
 use Symfony\Component\HttpFoundation\Request;
 
 class MeetupControllerProvider extends AbstractControllerProvider
@@ -26,7 +25,7 @@ SELECT id,
 DML;
             $meetups = $this->app['db']->fetchAll($sql);
 
-            return $this->app['twig']->render('meetups/list.html.twig', [
+            return $this->app['twig']->render('meetup/list.html.twig', [
                 'meetups' => $meetups
             ]);
         })->bind('meetups_list');
@@ -37,44 +36,8 @@ DML;
     protected function editMeetups()
     {
         $this->cc->match('/edit/{meetup}', function(Request $request, $meetup = null){
-            $form = $this->app['form.factory']
-                ->createBuilder(MeetupType::class, $meetup)
-                ->getForm();
-            $form->handleRequest($request);
 
-            if ($form->isSubmitted() && !$form->isValid()) {
-                $this->app['session']->getFlashBag()->add(
-                    'danger', 'Não foi possível processar sua requisição.'
-                );
-            }
-
-            if (!$form->isValid() || !$form->isSubmitted()) {
-                return $this->app['twig']->render('meetups/form.html.twig', [
-                    'form' => $form->createView()
-                ]);
-            }
-
-            $data = $form->getData();
-            $this->filterData($data);
-            $data['happening'] = $data['happening']->format('Y-m-d H:m');
-
-            if (!isset($meetup['id'])) {
-                $this->app['db']->insert('meetup', $data);
-                $meetup['id'] = $this->app['db']->lastInsertId();
-            } else {
-                $this->app['db']->update('meetup', $data, ['id' => $meetup['id']]);
-            }
-
-            $this->app['session']->getFlashBag()->add(
-                'success', 'Requisição processada com sucesso.'
-            );
-
-            return $this->app->redirect(
-                $this->app['url_generator']->generate(
-                    'meetup_view',
-                    ['meetup' => $meetup['id']]
-                )
-            );
+            return $this->handleForm($request, $meetup);
         })->bind('meetup_edit')
             ->value('meetup', null)
             ->convert('meetup', 'converter.meetup:convert');
@@ -85,7 +48,7 @@ DML;
     protected function viewMeetup()
     {
         $this->cc->get('/view/{meetup}', function($meetup){
-            return $this->app['twig']->render('meetups/view.html.twig', [
+            return $this->app['twig']->render('meetup/view.html.twig', [
                 'meetup' => $meetup
             ]);
 
@@ -107,6 +70,6 @@ DML;
     }
 
     protected function prePersist(array &$data) {
-        ;
+        $data['happening'] = $data['happening']->format('Y-m-d H:m');
     }
 }

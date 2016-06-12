@@ -9,7 +9,7 @@ $app['debug'] = true;
 $app->register(new Silex\Provider\SessionServiceProvider());
 
 $app->register(new Silex\Provider\TwigServiceProvider(), [
-    'twig.path' => __DIR__ . '/../view',
+    'twig.path' => __DIR__ . '/../src/Pprobat/View',
     'twig.templates' => ['bootstrap_3_layout.html.twig']
 ])->extend('twig', function($twig){
     $twig->addExtension(new Pprobat\Twig\Extension\Bootstrap());
@@ -55,8 +55,8 @@ $app['form.types'] = $app->extend('form.types', function ($types) use ($app) {
 });
 
 // -- Converters
-$app['converter.user'] = function () use ($app) {
-    return new Pprobat\Service\Converter\UserConverter($app['db']);
+$app['converter.member'] = function () use ($app) {
+    return new Pprobat\Service\Converter\MemberConverter($app['db']);
 };
 $app['converter.meetup'] = function() use ($app){
     return new Pprobat\Service\Converter\MeetupConverter($app['db']);
