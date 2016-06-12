@@ -12,6 +12,19 @@
             <dd>{{ member.name }}</dd>
             <dt>Membro desde:</dt>
             <dd>{{ member.affiliation|date('d/m/Y') }}</dd>
+            <dt>Jogos:</dd>
+            <dd>
+                {% if member.games is not empty %}
+                    <ul>
+                    {% for game in member.games %}
+                        {% set url = app.url_generator.generate('game_view', {'game': game.id}) %}
+                        <li><a href="{{ url }}">{{ game.name|e }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    Nenhum jogo cadastrado
+                {% endif %}
+            </dd>
             <dt>About:</dt>
             <dd>{{ member.about|e }}</dd>
         </dl>

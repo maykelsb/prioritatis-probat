@@ -9,7 +9,10 @@
             <dt>Nome do jogo:</dt>
             <dd>{{ game.name|e }}</dd>
             <dt>Designer:</dt>
-            <dd>{{ game.designers.name|e }}</dd>
+            <dd>
+                {% set url = app.url_generator.generate('member_view', {'member': game.designers.id}) %}
+                <a href="{{ url }}">{{ game.designers.name|e }}</a>
+            </dd>
             <dt>Descrição:</dt>
             <dd>{{ game.description|e }}</dd>
         </dl>

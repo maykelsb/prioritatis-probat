@@ -25,16 +25,31 @@ class MemberConverter
         }
 
         $query = <<<DML
-SELECT *
-  FROM member
-  WHERE id = ?
+SELECT m.*,
+       g.name AS gamename,
+       g.id AS gameid
+  FROM member m
+    LEFT JOIN member_game mg ON(m.id = mg.member)
+    LEFT JOIN game g ON(mg.game = g.id)
+  WHERE m.id = ?
 DML;
 
-        $data = $this->db->fetchAssoc($query, [$id]);
+        $data = $this->db->fetchAll($query, [$id]);
 
-        $data['affiliation'] = new \DateTime($data['affiliation']);
-        $data['creation'] = new \DateTime($data['creation']);
+        $member = $data[0];
+        unset($member['gamename'], $member['gameid']);
+        $member['games'] = [];
 
-        return $data;
+        foreach ($data as $_data) {
+            $member['games'][] = [
+                'id' => $_data['gameid'],
+                'name' => $_data['gamename']
+            ];
+        }
+
+        $member['affiliation'] = new \DateTime($member['affiliation']);
+        $member['creation'] = new \DateTime($member['creation']);
+
+        return $member;
     }
 }

@@ -7,7 +7,7 @@
 namespace Pprobat\Service\Converter;
 
 /**
- * Implements a converter to transform an userid in a row with all user data.
+ * Implements a converter to transform an gameid in a row with all game data.
  */
 class GameConverter
 {

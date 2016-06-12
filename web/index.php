@@ -19,13 +19,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
         switch ($type) {
             case 'P':
                 return '<span class="label label-success">principal</span>';
-                break;
             case 'S':
                 return '<span class="label label-warning">especial</span>';
-                break;
             case 'O':
                 return '<span class="label label-default">outro</span>';
-                break;
             default:
                 return '<span class="label label-danger">???</span>';
         }

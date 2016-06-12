@@ -56,7 +56,7 @@ class GameType extends AbstractType
         $sql = <<<DML
 SELECT id,
        name
-  FROM user
+  FROM member
 DML;
         $data = $this->db->fetchAll($sql);
         foreach (is_array($data)?$data:[] as $designer) {

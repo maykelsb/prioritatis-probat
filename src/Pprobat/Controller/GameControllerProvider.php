@@ -83,7 +83,7 @@ DML;
         }
         $this->app['db']->insert('member_game', [
             'game' => $gameId,
-            'user' => $designer
+            'member' => $designer
         ]);
 
         return $gameId;
