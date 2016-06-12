@@ -9,10 +9,16 @@ namespace Pprobat\Twig\Extension;
 class Bootstrap extends \Twig_Extension
 {
     public function getFilters() {
-        $filters = [];
-        $filters[] = $this->alertFilter();
 
-        return $filters;
+        return [
+            $this->alertFilter()
+        ];
+    }
+
+    public function getFunctions() {
+        return [
+            $this->glyphiconFunction()
+        ];
     }
 
     protected function alertFilter()
@@ -26,6 +32,15 @@ class Bootstrap extends \Twig_Extension
 <div class="alert alert-{$options[0]} text-center" role="alert">{$string}</div>
 HTML;
         }, ['is_variadic' => true, 'is_safe' => ['html']]);
+    }
+
+    protected function glyphiconFunction()
+    {
+        return new \Twig_SimpleFunction('bt_glyph', function($glyph){
+            return <<<HTML
+<span class="glyphicon glyphicon-{$glyph}"></span>
+HTML;
+        }, ['is_safe' => ['html']]);
     }
 
     public function getName() {
