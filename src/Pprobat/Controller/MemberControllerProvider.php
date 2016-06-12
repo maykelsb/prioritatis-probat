@@ -39,7 +39,7 @@ class MemberControllerProvider implements ControllerProviderInterface
     protected function listMembers()
     {
         $this->cc->get('/', function(){
-            $members = $this->app['db']->fetchAll('SELECT name, affiliation FROM user');
+            $members = $this->app['db']->fetchAll('SELECT id, username, name, affiliation FROM user');
 
             return $this->app['twig']->render('members/list.html.twig', [
                 'members' => $members
@@ -51,9 +51,9 @@ class MemberControllerProvider implements ControllerProviderInterface
 
     protected function editMember()
     {
-        $this->cc->match('/new/{id}', function(Request $request, $id = null){
+        $this->cc->match('/edit/{member}', function(Request $request, $member = null){
             $form = $this->app['form.factory']
-                ->createBuilder(MemberType::class)
+                ->createBuilder(MemberType::class, $member)
                 ->getForm();
 
             $form->handleRequest($request);
@@ -73,11 +73,11 @@ class MemberControllerProvider implements ControllerProviderInterface
             $this->filterData($data);
             $data['affiliation'] = $data['affiliation']->format('Y-m-d');
 
-            if (is_null($id)) {
+            if (is_null($member)) {
                 $this->app['db']->insert('user', $data);
-                $id = $this->app['db']->lastInsertId();
+                $member = $this->app['db']->lastInsertId();
             } else {
-                $this->app['db']->update('user', $data, ['id' => $id]);
+                $this->app['db']->update('user', $data, ['id' => $member]);
             }
 
             $this->app['session']->getFlashBag()->add(
@@ -87,11 +87,11 @@ class MemberControllerProvider implements ControllerProviderInterface
             return $this->app->redirect(
                 $this->app['url_generator']->generate(
                     'member_view',
-                    ['member' => $id]
+                    ['member' => $member]
                 )
             );
         })->bind('member_edit')
-            ->value('id', null);
+            ->convert('member', 'converter.user:convert');
 
         return $this;
     }

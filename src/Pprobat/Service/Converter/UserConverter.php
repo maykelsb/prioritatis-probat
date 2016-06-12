@@ -29,6 +29,12 @@ SELECT *
   FROM user
   WHERE id = ?
 DML;
-        return $this->db->fetchAssoc($query, [$id]);
+
+        $data = $this->db->fetchAssoc($query, [$id]);
+
+        $data['affiliation'] = new \DateTime($data['affiliation']);
+        $data['creation'] = new \DateTime($data['creation']);
+
+        return $data;
     }
 }
