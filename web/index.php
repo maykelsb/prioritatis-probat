@@ -68,4 +68,5 @@ $app->mount('/', new Pprobat\Controller\HomeControllerProvider())
     ->mount('/members', new Pprobat\Controller\MemberControllerProvider())
     ->mount('/games', new Pprobat\Controller\GameControllerProvider())
     ->mount('/about', new Pprobat\Controller\AboutControllerProvider())
+    ->mount('/sessions', new Pprobat\Controller\SessionControllerProvider())
     ->run();

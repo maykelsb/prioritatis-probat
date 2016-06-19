@@ -1,23 +1,25 @@
 <?php
 /**
- * Basic controller to manage games.
+ * This file is part of Prioritatis Probat project.
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * @link https://github.com/maykelsb/prioritatis-probat
  */
 namespace Pprobat\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-
+/**
+ * Basic controller to manage games.
+ */
 class GameControllerProvider extends AbstractControllerProvider
 {
-    protected function enableRoutes() {
-        $this->listGames()
-            ->editGame()
-            ->viewGame();
-    }
-
-    protected function listGames()
+    protected function listGamesAction()
     {
         $this->cc->get('/', function(){
             $sql = <<<DML
@@ -38,7 +40,7 @@ DML;
         return $this;
     }
 
-    protected function editGame()
+    protected function editGameAction()
     {
         $this->cc->match('/edit/{game}', function(Request $request, $game = null){
             $game['designers'] = $game['designers']['id'];
@@ -52,7 +54,7 @@ DML;
         return $this;
     }
 
-    protected function viewGame()
+    protected function viewGameAction()
     {
         $this->cc->get('/view/{game}', function($game){
             return $this->app['twig']->render('game/view.html.twig', [

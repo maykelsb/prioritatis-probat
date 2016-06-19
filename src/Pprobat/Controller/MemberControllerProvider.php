@@ -1,20 +1,22 @@
 <?php
+/**
+ * This file is part of Prioritatis Probat project.
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * @link https://github.com/maykelsb/prioritatis-probat
+ */
 namespace Pprobat\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Pprobat\Form\Type\MemberType;
-
 class MemberControllerProvider extends AbstractControllerProvider
 {
-    protected function enableRoutes()
-    {
-        $this->listMembers()
-            ->editMember()
-            ->viewMember();
-    }
-
-    protected function listMembers()
+    protected function listMembersAction()
     {
         $this->cc->get('/', function(){
             $members = $this->app['db']->fetchAll('SELECT id, username, name, affiliation FROM member');
@@ -27,7 +29,7 @@ class MemberControllerProvider extends AbstractControllerProvider
         return $this;
     }
 
-    protected function editMember()
+    protected function editMemberAction()
     {
         $this->cc->match('/edit/{member}', function(Request $request, $member = null){
 
@@ -39,7 +41,7 @@ class MemberControllerProvider extends AbstractControllerProvider
         return $this;
     }
 
-    protected function viewMember()
+    protected function viewMemberAction()
     {
         $this->cc->get('/view/{member}', function($member){
             return $this->app['twig']->render('member/view.html.twig', [

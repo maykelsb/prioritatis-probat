@@ -35,6 +35,8 @@ abstract class AbstractControllerProvider implements ControllerProviderInterface
         $this->cc = $app['controllers_factory'];
 
         $this->enableRoutes();
+//
+//        $this->advancedEnableRoutes();
 
         return $this->cc;
     }
@@ -103,9 +105,23 @@ abstract class AbstractControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * Use this method to turn on all controller routes.
+     * Loops through all controller methods and find the ones with "Action"
+     * at the end of its name, calling them and binding its route.
+     *
+     * @final
+     * @return \Pprobat\Controller\AbstractControllerProvider
      */
-    abstract protected function enableRoutes();
+    final protected function enableRoutes()
+    {
+        $refCtrl = new \ReflectionClass($this);
+        foreach ($refCtrl->getMethods(\ReflectionMethod::IS_PROTECTED) as $method) {
+            if ('Action' === substr($method->name, -6)) {
+                $this->{$method->name}();
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * Sanitize data.
