@@ -1,5 +1,19 @@
 <?php
+/**
+ * This file is part of Prioritatis Probat project.
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * @link https://github.com/maykelsb/prioritatis-probat
+ */
 
+/**
+ * Using composer psr-0 autoload as the default autoload.
+ */
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Silex\Application();
@@ -7,26 +21,14 @@ $app['debug'] = true;
 
 // -- Providers
 $app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\HttpFragmentServiceProvider());
 
 $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.path' => __DIR__ . '/../src/Pprobat/View',
     'twig.templates' => ['bootstrap_3_layout.html.twig']
 ])->extend('twig', function($twig){
     $twig->addExtension(new Pprobat\Twig\Extension\Bootstrap());
-
-    // -- @Todo: Migrar to a class
-    $twig->addFilter(new Twig_SimpleFilter('meetuptype', function($type){
-        switch ($type) {
-            case 'P':
-                return '<span class="label label-success">principal</span>';
-            case 'S':
-                return '<span class="label label-warning">especial</span>';
-            case 'O':
-                return '<span class="label label-default">outro</span>';
-            default:
-                return '<span class="label label-danger">???</span>';
-        }
-    }, ['is_safe' => ['html']]));
+    $twig->addExtension(new Pprobat\Twig\Extension\Pprobat());
     return $twig;
 });
 
@@ -52,15 +54,29 @@ $app['form.types'] = $app->extend('form.types', function ($types) use ($app) {
 });
 
 // -- Converters
-$app['converter.member'] = function () use ($app) {
+$app['converter.member'] = function($app) {
     return new Pprobat\Service\Converter\MemberConverter($app['db']);
 };
-$app['converter.meetup'] = function() use ($app){
+$app['converter.meetup'] = function($app){
     return new Pprobat\Service\Converter\MeetupConverter($app['db']);
 };
-$app['converter.game'] = function() use ($app){
+$app['converter.game'] = function($app){
     return new Pprobat\Service\Converter\GameConverter($app['db']);
 };
+$app['converter.session'] = function($app){
+    return new Pprobat\Service\Converter\SessionConverter($app['db']);
+};
+
+// -- Persisters
+$app['persister.session'] = function($app){
+    return new Pprobat\Service\Persister\SessionPersister($app['db']);
+};
+
+// -- Form handlers
+$app['formhandler.session'] = function(){
+    return new Pprobat\Service\Formhandler\SessionFormHandler();
+};
+
 
 // -- Controllers
 $app->mount('/', new Pprobat\Controller\HomeControllerProvider())
