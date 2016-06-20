@@ -1,0 +1,14 @@
+{% extends "layout/main.html.twig" %}
+{% set active_page = 'sessions_list' %}
+{% block title %}::Partidas{% endblock %}
+{% block body %}
+    <div class="page-header">
+        <h4>Partidas</h4>
+    </div>
+    <br style="clear:both" />
+    <br />
+    {% include 'session/session-list.html.twig' with { 'sessions': sessions } %}
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

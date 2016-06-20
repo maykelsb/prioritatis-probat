@@ -2,9 +2,20 @@
 {% set active_page = 'meetups_list' %}
 {% block title %}::Meetups{% endblock %}
 {% block body %}
+    <div class="row">
+        <div class="btn-group pull-right" role="group">
+            <button type="button" class="btn btn-default meetup-edit">
+                {{ bt_glyph('pencil') }}&nbsp;Editar encontro
+            </button>
+            <button type="button" class="btn btn-default session-add">
+                {{ bt_glyph('plus') }}&nbsp;Partida
+            </button>
+        </div>
+    </div>
     {% if meetup is empty %}
         {{ "Meetup não encontrado!"|e|bt_alert('danger') }}        
     {% else %}
+    <div class="row">
         <dl class="dl-horizontal">
             <dt>Título:</dt>
             <dd>{{ meetup.title|e }}</dd>
@@ -17,5 +28,18 @@
             <dt>Observações:</dt>
             <dd>{{ meetup.notes|e }}</dd>
         </dl>
+    </div>
+    <div class="page-header">
+        <h4>Partidas</h4>
+    </div>
+    {% include 'session/session-list.html.twig' with { 'sessions': sessions } %}
     {% endif %}
+{% endblock %}
+{% block javascripts %}
+$('.meetup-edit').click(function(){
+    window.location.assign('{{ app.url_generator.generate('meetup_edit', { 'meetup': meetup.id }) }} ');
+});
+$('.session-add').click(function(){
+    window.location.assign('{{ app.url_generator.generate('session_edit', { 'meetup': meetup.id }) }}');
+});
 {% endblock %}

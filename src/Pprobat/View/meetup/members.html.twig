@@ -1,0 +1,12 @@
+<h4>Participantes</h4>
+{% if members is empty %}
+    {{ "Nenhum participante foi adicionado ao encontro."|e|bt_alert('info') }}        
+{% else %}
+    <div class="row">
+        <div class="avatar-list col-md-12">
+        {% for member in members %}
+            {{ useravatar(member.name|e, member.status) }}
+        {% endfor %}
+        </div>
+    </div>
+{% endif %}
