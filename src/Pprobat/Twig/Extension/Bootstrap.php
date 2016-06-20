@@ -1,27 +1,22 @@
 <?php
 /**
- * Extends twig by adding a filters as helpers for bootstrap.
+ * This file is part of Prioritatis Probat project.
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * @link https://github.com/maykelsb/prioritatis-probat
  */
 namespace Pprobat\Twig\Extension;
 
-class Bootstrap extends \Twig_Extension
+/**
+ * Extends twig by adding a filters and functions as helpers for twitter bootstrap.
+ */
+class Bootstrap extends AbstractTwigExtension
 {
-    public function getFilters() {
-
-        return [
-            $this->alertFilter(),
-            $this->labelFilter()
-        ];
-    }
-
-    public function getFunctions() {
-        return [
-            $this->glyphiconFunction()
-        ];
-    }
-
     protected function alertFilter()
     {
         return new \Twig_SimpleFilter('bt_alert', function($string, array $options = []){
@@ -34,7 +29,7 @@ class Bootstrap extends \Twig_Extension
             }
 
             return <<<HTML
-<div class="alert alert-{$options[0]} text-center" role="alert">{$string}</div>
+<div class="col-md-8 col-md-offset-2 alert alert-{$options[0]} text-center" role="alert">{$string}</div>
 HTML;
         }, ['is_variadic' => true, 'is_safe' => ['html']]);
     }
@@ -62,6 +57,20 @@ HTML;
             return <<<HTML
 <span class="glyphicon glyphicon-{$glyph}"></span>
 HTML;
+        }, ['is_safe' => ['html']]);
+    }
+
+    protected function buttonFunction()
+    {
+        return new \Twig_SimpleFunction('bt_button', function($text, $glyph, array $options = []){
+            $class = isset($options['class'])?$options['class']:'';
+            $type =  isset($options['type'])?$options['type']:'default';
+            return <<<HTML
+<button type="button" class="btn btn-{$type} {$class}">
+    <span class="glyphicon glyphicon-{$glyph}"></span>&nbsp;{$text}
+</button>
+HTML;
+
         }, ['is_safe' => ['html']]);
     }
 
