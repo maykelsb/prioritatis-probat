@@ -81,3 +81,15 @@ ADD CONSTRAINT `ug_fk_user`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 ---
+CREATE TABLE `pprobat`.`session` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `meetup` INT NOT NULL COMMENT 'Meetup where the session took place',
+  `game` INT NOT NULL COMMENT 'The game played at the session',
+  PRIMARY KEY (`id`));
+---
+CREATE TABLE `pprobat`.`session_member` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `session` INT NOT NULL COMMENT 'Session where the player participated',
+  `member` INT NOT NULL COMMENT 'The member which played in the session',
+  PRIMARY KEY (`id`));
+---
