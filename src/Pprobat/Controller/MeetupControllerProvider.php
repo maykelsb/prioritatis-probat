@@ -54,12 +54,46 @@ DML;
     {
         $this->cc->get('/view/{meetup}', function($meetup){
             return $this->app['twig']->render('meetup/view.html.twig', [
-                'meetup' => $meetup
+                'meetup' => $meetup,
+                'sessions' => []
             ]);
 
         })->bind('meetup_view')
             ->convert('meetup', 'converter.meetup:convert');
     }
+
+//    protected function addMeetupMembersAction()
+//    {
+//        $this->cc->get('/{meetup}/members/add', function($meetup){
+//            $sql = <<<DML
+//SELECT m.name,
+//       CASE WHEN mm.id IS NULL THEN 'N'
+//            ELSE 'A' END AS status
+//  FROM member m
+//    LEFT JOIN meetup_member mm ON (m.id = mm.member AND mm.meetup = ?)
+//DML;
+//            $members = $this->app['db']->fetchAll($sql, [$meetup]);
+//            return $this->app['twig']->render('meetup/members.html.twig', [
+//                'members' => $members
+//            ]);
+//
+//        })->bind('meetup_members_add');
+//    }
+
+//    protected function listMeetupMemberAction()
+//    {
+//        $this->cc->get('/{meetup}/members', function($meetup){
+//
+//
+//
+//
+//            return $this->app['twig']->render('meetup/members.html.twig', [
+//                'members' => []
+//            ]);
+//
+//        })->bind('meetup_members_list');
+//    }
+
 
     /**
      * {@inheritdoc}
@@ -74,6 +108,9 @@ DML;
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function prePersist(array &$data) {
         $data['happening'] = $data['happening']->format('Y-m-d H:m');
     }
