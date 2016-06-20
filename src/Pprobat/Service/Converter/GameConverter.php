@@ -1,22 +1,23 @@
 <?php
 /**
- * A game converter.
+ * This file is part of Prioritatis Probat project.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
+ *
+ * @link https://github.com/maykelsb/prioritatis-probat
  */
 namespace Pprobat\Service\Converter;
 
 /**
- * Implements a converter to transform an gameid in a row with all game data.
+ * A service which converts game id in a game data array.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */
 class GameConverter
 {
-    protected $db;
-
-    public function __construct($db) {
-        $this->db = $db;
-    }
-
     public function convert($id)
     {
         if (is_null($id)) {
