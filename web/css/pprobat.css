@@ -1,1 +1,23 @@
 table thead tr th{text-align:center}
+.page-header>h4{margin-bottom:0}
+.page-header{padding-bottom:0}
+
+
+
+
+.user-avatar{
+    background-color: black;
+    background-image: url('../img/cultist.png');
+    background-repeat: no-repeat;
+    background-size:contain;
+    height:80px
+}
+.user-avatar .user-name{
+    margin-top:80px;
+    background-color:silver;
+    color:black;
+}
+.avatar-list{
+    margin:5px;
+}
+
