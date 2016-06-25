@@ -16,7 +16,16 @@ namespace Pprobat\Service\Converter;
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */
-class SessionConverter
+class SessionConverter extends AbstractConverter
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function convert($id) {
+        if (is_null($id)) {
+            return null;
+        }
 
+
+    }
 }

@@ -9,6 +9,7 @@
  *
  * @link https://github.com/maykelsb/prioritatis-probat
  */
+namespace Pprobat\Service\Converter;
 
 use Doctrine\DBAL\Connection;
 
@@ -27,4 +28,11 @@ abstract class AbstractConverter
     public function __construct(Connection $db) {
         $this->db = $db;
     }
+
+    /**
+     * The converter method.
+     *
+     * @param int|null $id The id to be converted
+     */
+    abstract function convert($id);
 }

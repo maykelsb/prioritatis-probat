@@ -16,8 +16,11 @@ namespace Pprobat\Service\Converter;
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */
-class GameConverter
+class GameConverter extends AbstractConverter
 {
+    /**
+     * {@inheritdoc}
+     */
     public function convert($id)
     {
         if (is_null($id)) {
