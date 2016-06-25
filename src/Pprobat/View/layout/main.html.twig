@@ -51,11 +51,11 @@
             {% block jumbotron %}{% endblock %}
             {# Flash message #}
 {#            {% if app.request.hasPreviousSession and app.session.flashBag.peekAll()|length > 0 %}#}
-                {% for type, messages in app.session.flashBag.all() %}
-                    {% for message in messages %}
-                        {{ message|bt_alert(type) }}
-                    {% endfor %}
-                {% endfor %}
+{#                {% for type, messages in app.session.flashBag.all() %}#}
+{#                    {% for message in messages %}#}
+{#                        {{ message|bt_alert(type) }}#}
+{#                    {% endfor %}#}
+{#                {% endfor %}#}
 {#            {% endif %}#}
             {% block body %}{% endblock %}
             <br style="clear:both" />
