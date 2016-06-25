@@ -8,7 +8,7 @@
                 {{ bt_glyph('pencil') }}&nbsp;Editar encontro
             </button>
             <button type="button" class="btn btn-default session-add">
-                {{ bt_glyph('plus') }}&nbsp;Partida
+                {{ bt_glyph('plus') }}&nbsp;Sessão
             </button>
         </div>
     </div>
@@ -30,9 +30,9 @@
         </dl>
     </div>
     <div class="page-header">
-        <h4>Partidas</h4>
+        <h4>Sessões ({{ sessions|length }})</h4>
     </div>
-    {% include 'session/session-list.html.twig' with { 'sessions': sessions } %}
+    {% include 'meetup/sessions.html.twig' with { 'sessions': sessions } %}
     {% endif %}
 {% endblock %}
 {% block javascripts %}
