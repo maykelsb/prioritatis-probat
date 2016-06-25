@@ -7,8 +7,8 @@
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  * @link https://github.com/maykelsb/prioritatis-probat
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */
 
 /**
@@ -22,7 +22,6 @@ $app['debug'] = true;
 // -- Providers
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\HttpFragmentServiceProvider());
-
 $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.path' => __DIR__ . '/../src/Pprobat/View',
     'twig.templates' => ['bootstrap_3_layout.html.twig']
@@ -31,7 +30,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
     $twig->addExtension(new Pprobat\Twig\Extension\Pprobat());
     return $twig;
 });
-
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'drive' => 'pdo_mysql',
@@ -46,9 +44,10 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale' => 'pt_BR'
 ));
 $app->register(new Silex\Provider\FormServiceProvider());
-$app['form.types'] = $app->extend('form.types', function ($types) use ($app) {
+$app['form.types'] = $app->extend('form.types', function($types) use ($app) {
     $types[] = new Pprobat\Form\Type\MemberType();
     $types[] = new Pprobat\Form\Type\GameType($app['db']);
+    $types[] = new Pprobat\Form\Type\SessionType($app['db']);
 
     return $types;
 });
@@ -66,17 +65,6 @@ $app['converter.game'] = function($app){
 $app['converter.session'] = function($app){
     return new Pprobat\Service\Converter\SessionConverter($app['db']);
 };
-
-// -- Persisters
-$app['persister.session'] = function($app){
-    return new Pprobat\Service\Persister\SessionPersister($app['db']);
-};
-
-// -- Form handlers
-$app['formhandler.session'] = function(){
-    return new Pprobat\Service\Formhandler\SessionFormHandler();
-};
-
 
 // -- Controllers
 $app->mount('/', new Pprobat\Controller\HomeControllerProvider())
