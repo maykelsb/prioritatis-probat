@@ -35,8 +35,6 @@ abstract class AbstractControllerProvider implements ControllerProviderInterface
         $this->cc = $app['controllers_factory'];
 
         $this->enableRoutes();
-//
-//        $this->advancedEnableRoutes();
 
         return $this->cc;
     }

@@ -7,13 +7,17 @@
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  * @link https://github.com/maykelsb/prioritatis-probat
  */
 namespace Pprobat\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Controller for meetup requests.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ */
 class MeetupControllerProvider extends AbstractControllerProvider
 {
     protected function listMeetupsAction()
@@ -55,45 +59,47 @@ DML;
         $this->cc->get('/view/{meetup}', function($meetup){
             return $this->app['twig']->render('meetup/view.html.twig', [
                 'meetup' => $meetup,
-                'sessions' => []
+                'sessions' => $this->getMeetupSessions($meetup['id'])
             ]);
 
         })->bind('meetup_view')
             ->convert('meetup', 'converter.meetup:convert');
     }
 
-//    protected function addMeetupMembersAction()
-//    {
-//        $this->cc->get('/{meetup}/members/add', function($meetup){
-//            $sql = <<<DML
-//SELECT m.name,
-//       CASE WHEN mm.id IS NULL THEN 'N'
-//            ELSE 'A' END AS status
-//  FROM member m
-//    LEFT JOIN meetup_member mm ON (m.id = mm.member AND mm.meetup = ?)
-//DML;
-//            $members = $this->app['db']->fetchAll($sql, [$meetup]);
-//            return $this->app['twig']->render('meetup/members.html.twig', [
-//                'members' => $members
-//            ]);
-//
-//        })->bind('meetup_members_add');
-//    }
+    protected function getMeetupSessions($meetupid)
+    {
+        $sql = <<<DML
+SELECT s.id,
+       g.name AS game,
+       d.name AS designer,
+       p.name AS player
+  FROM session s
+    LEFT JOIN game g ON (s.game = g.id)
+    LEFT JOIN member_game mg ON (g.id = mg.game)
+    LEFT JOIN member d ON (mg.member = d.id)
+    LEFT JOIN session_member sm ON (s.id = sm.session)
+    LEFT JOIN member p ON (sm.member = p.id)
+  WHERE s.meetup = :meetup
+DML;
 
-//    protected function listMeetupMemberAction()
-//    {
-//        $this->cc->get('/{meetup}/members', function($meetup){
-//
-//
-//
-//
-//            return $this->app['twig']->render('meetup/members.html.twig', [
-//                'members' => []
-//            ]);
-//
-//        })->bind('meetup_members_list');
-//    }
+        $sessions = [];
+        foreach ($this->app['db']->fetchAll($sql, ['meetup' => $meetupid]) as $session)
+        {
+            if (array_key_exists($session['id'], $sessions)) {
+                $sessions[$session['id']]['players'][] = $session['player'];
+                continue;
+            }
 
+            $sessions[$session['id']] = [
+                'id' => $session['id'],
+                'game' => $session['game'],
+                'designer' => $session['designer'],
+                'players' => [$session['player']]
+            ];
+        }
+
+        return $sessions;
+    }
 
     /**
      * {@inheritdoc}

@@ -7,7 +7,6 @@
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  * @link https://github.com/maykelsb/prioritatis-probat
  */
 namespace Pprobat\Controller;
@@ -15,10 +14,17 @@ namespace Pprobat\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Basic controller to manage games.
+ * Form to manage game data.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */
 class GameControllerProvider extends AbstractControllerProvider
 {
+    /**
+     * Registers a get route to list all games and its designers.
+     *
+     * @return \Pprobat\Controller\GameControllerProvider
+     */
     protected function listGamesAction()
     {
         $this->cc->get('/', function(){
@@ -40,6 +46,11 @@ DML;
         return $this;
     }
 
+    /**
+     * Registers a get/post route to edit and create new games.
+     *
+     * @return \Pprobat\Controller\GameControllerProvider
+     */
     protected function editGameAction()
     {
         $this->cc->match('/edit/{game}', function(Request $request, $game = null){
@@ -54,6 +65,11 @@ DML;
         return $this;
     }
 
+    /**
+     * Registers a get route to view all game details.
+     *
+     * @return \Pprobat\Controller\GameControllerProvider
+     */
     protected function viewGameAction()
     {
         $this->cc->get('/view/{game}', function($game){
