@@ -1,10 +1,14 @@
 <?php
 /**
- * Game creation form.
+ * This file is part of Prioritatis Probat project.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
+ *
+ * @link https://github.com/maykelsb/prioritatis-probat
  */
-
 namespace Pprobat\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -16,7 +20,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Doctrine\DBAL\Connection;
 
-
+/**
+ * Form to manage game data.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ */
 class GameType extends AbstractType
 {
     /**
@@ -39,7 +47,6 @@ class GameType extends AbstractType
         ])->add('designers', ChoiceType::class, [
             'label' => 'Designer: ',
             'choices' => $this->loadDesignerChoices(),
-//            'multiple' => true
         ])->add('submit', SubmitType::class, [
             'attr' => ['class' => 'btn-primary']
         ]);

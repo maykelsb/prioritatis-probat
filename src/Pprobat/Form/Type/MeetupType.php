@@ -1,10 +1,14 @@
 <?php
 /**
- * Meetup creation form.
+ * This file is part of Prioritatis Probat project.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3, or (at your option)
+ * any later version.
+ *
+ * @link https://github.com/maykelsb/prioritatis-probat
  */
-
 namespace Pprobat\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -16,6 +20,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 //use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Form to manage meetup data.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ */
 class MeetupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
