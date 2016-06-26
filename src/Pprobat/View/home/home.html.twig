@@ -1,9 +1,13 @@
 {% extends "layout/main.html.twig" %}
 {% set active_page = 'index' %}
-
-{% block jumbotron %}
-    <div class="jumbotron"></div>
-{% endblock %}
 {% block body %}
-Helllo Silex o/
+    <div class="row">
+        {{ dashboardwidget('member', qtdmembers) }}
+        {{ dashboardwidget('game', qtdgames) }}
+        {{ dashboardwidget('session', qtdsessions) }}
+    </div>
+    <hr />
+    <div class="row">
+        {{ useravatar('Jon', 'A') }}
+    </div>
 {% endblock %}

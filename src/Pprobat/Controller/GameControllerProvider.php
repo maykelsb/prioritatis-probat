@@ -14,7 +14,7 @@ namespace Pprobat\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Form to manage game data.
+ * Controller for games requests.
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */

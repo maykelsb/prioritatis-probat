@@ -2,7 +2,20 @@ table thead tr th{text-align:center}
 .page-header>h4{margin-bottom:0}
 .page-header{padding-bottom:0}
 
-
+.widget.member > div{background-color:#00a300}
+.widget.game > div{background-color:#2d89ef}
+.widget.session > div{background-color:#603cba}
+.widget.col-md-4{padding:5px}
+.widget.member div.title{background-color:#009200}
+.widget.game div.title{background-color:#287bd6}
+.widget.session div.title{background-color:#5635a7}
+.widget div.title{color:white;font-weight:bold;text-align:right;padding:2px 7px}
+.widget div.body:before{font-family: "Glyphicons Halflings";color:rgba(255, 255, 255, 1);font-size:50px;padding-left:10px}
+.widget.member div.body:before{content:"\e008"}
+.widget.game div.body:before{content:"\e215"}
+.widget.session div.body:before{content:"\231b"}
+.widget div.body{font-size:40px;color:white}
+.widget p{padding-right:15px;margin:0;padding-top:8px}
 
 
 .user-avatar{

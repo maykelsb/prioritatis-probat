@@ -14,6 +14,11 @@ namespace Pprobat\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Pprobat\Form\Type\SessionType;
 
+/**
+ * Controller for sessions requests.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ */
 class SessionControllerProvider extends AbstractControllerProvider
 {
     protected function listSessionsAction()

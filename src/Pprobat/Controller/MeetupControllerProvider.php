@@ -14,7 +14,7 @@ namespace Pprobat\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Controller for meetup requests.
+ * Controller for meetups requests.
  *
  * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  */

@@ -7,13 +7,17 @@
  * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
  *
- * @author Maykel S. Braz <maykelsb@yahoo.com.br>
  * @link https://github.com/maykelsb/prioritatis-probat
  */
 namespace Pprobat\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Controller for members requests.
+ *
+ * @author Maykel S. Braz <maykelsb@yahoo.com.br>
+ */
 class MemberControllerProvider extends AbstractControllerProvider
 {
     protected function listMembersAction()

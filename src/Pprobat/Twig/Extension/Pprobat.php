@@ -45,6 +45,31 @@ HTML;
         }, ['is_safe' => ['html']]);
     }
 
+    protected function dashboardWidgetFunction()
+    {
+        return new \Twig_SimpleFunction('dashboardwidget', function($type, $number){
+            switch ($type){
+                case 'member':
+                    $title = "Membros";
+                    break;
+                case 'session':
+                    $title = "Sessão";
+                    break;
+                case 'game':
+                    $title = "Jogos";
+                    break;
+            }
+            return <<<HTML
+<div class="col-md-4 widget {$type}">
+    <div>
+        <div class="title">{$title}</div>
+        <div class="body"><p class="pull-right">{$number}</p></div>
+    </div>
+</div>
+HTML;
+        }, ['is_safe' => ['html']]);
+    }
+
     public function getName() {
         return 'pprobat';
     }
