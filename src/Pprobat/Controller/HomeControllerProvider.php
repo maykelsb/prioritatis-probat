@@ -32,39 +32,8 @@ DML;
         })->bind('home');
     }
 
-//        $this->cc->get('/', function(){
-//            $sql = <<<DML
-//SELECT g.id,
-//       g.name,
-//       u.name AS designer
-//  FROM game g
-//    INNER JOIN member_game ug ON(g.id = ug.game)
-//    INNER JOIN member u ON(u.id = ug.member)
-//DML;
-//            $games = $this->app['db']->fetchAll($sql);
-//            return $this->app['twig']->render('game/list.html.twig', [
-//                'games' => $games
-//            ]);
-//
-//        })->bind('games_list');
-//
-//        return $this;
-
-
-//    public function connect(Application $app) {
-//        $controllers = $app['controllers_factory'];
-//
-//        $controllers->get('/', function() use ($app){
-//            return $app['twig']->render('home/home.html.twig', []);
-//        })->bind('index');
-//
-//        return $controllers;
-//    }
-
     protected function filterData(array &$data){
-
     }
     protected function prePersist(array &$data){
-
     }
 }
