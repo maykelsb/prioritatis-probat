@@ -30,15 +30,17 @@ class Pprobat extends AbstractTwigExtension
         }, ['is_safe' => ['html']]);
     }
 
-    protected function userAvatarFunction()
+    protected function userWidgetFunction()
     {
-        return new \Twig_SimpleFunction('useravatar', function($name, $status){
+        return new \Twig_SimpleFunction('userwidget', function($name, $own, $others){
             $name = explode(' ', $name);
             $name = ucfirst(strtolower(current($name))) . ' ' . strtoupper(substr(end($name), 0, 1)) . '.';
+
             return <<<HTML
-<div class="col-md-2">
-    <div class="user-avatar">
-        <div class="user-name">{$name}</div>
+<div class="col-md-3 avatar">
+    <div>
+        <div class="body">{$own}/{$others}</div>
+        <div class="title">{$name}</div>
     </div>
 </div>
 HTML;
@@ -53,7 +55,7 @@ HTML;
                     $title = "Membros";
                     break;
                 case 'session':
-                    $title = "Sessão";
+                    $title = "Sessões";
                     break;
                 case 'game':
                     $title = "Jogos";

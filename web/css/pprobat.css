@@ -1,36 +1,21 @@
 table thead tr th{text-align:center}
 .page-header>h4{margin-bottom:0}
 .page-header{padding-bottom:0}
-
+.widget.col-md-4{padding:5px}
 .widget.member > div{background-color:#00a300}
 .widget.game > div{background-color:#2d89ef}
 .widget.session > div{background-color:#603cba}
-.widget.col-md-4{padding:5px}
 .widget.member div.title{background-color:#009200}
 .widget.game div.title{background-color:#287bd6}
 .widget.session div.title{background-color:#5635a7}
 .widget div.title{color:white;font-weight:bold;text-align:right;padding:2px 7px}
-.widget div.body:before{font-family: "Glyphicons Halflings";color:rgba(255, 255, 255, 1);font-size:50px;padding-left:10px}
+.widget div.body:before{font-family:"Glyphicons Halflings";color:rgba(255, 255, 255, 1);font-size:50px;padding-left:10px}
 .widget.member div.body:before{content:"\e008"}
 .widget.game div.body:before{content:"\e215"}
 .widget.session div.body:before{content:"\231b"}
 .widget div.body{font-size:40px;color:white}
 .widget p{padding-right:15px;margin:0;padding-top:8px}
-
-
-.user-avatar{
-    background-color: black;
-    background-image: url('../img/cultist.png');
-    background-repeat: no-repeat;
-    background-size:contain;
-    height:80px
-}
-.user-avatar .user-name{
-    margin-top:80px;
-    background-color:silver;
-    color:black;
-}
-.avatar-list{
-    margin:5px;
-}
-
+.avatar.col-md-3{padding:5px}
+.avatar>div{background-color:#C6C6C6}
+.avatar div.body{font-size:20px;background:url('/img/cultist.png')no-repeat;background-size:contain;text-align:right;padding: 20px 10px 15px 0px}
+.avatar div.title{background-color:#909090;color:white;text-align:right;padding:2px 5px}

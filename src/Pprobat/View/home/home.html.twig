@@ -8,6 +8,12 @@
     </div>
     <hr />
     <div class="row">
-        {{ useravatar('Jon', 'A') }}
+        {% if users is empty %}
+            {{ 'Nenhum membro cadastrado.'|bt_alert('info') }}
+        {% else %}
+            {% for user in users %}
+                {{ userwidget(user.name|e, user.own, user.others) }}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

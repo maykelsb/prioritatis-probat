@@ -1,6 +1,7 @@
 {% set navbar = [['home', 'Home'], ['meetups_list', 'Encontros']] %}
 {% set navbar = navbar|merge([['members_list', 'Membros'], ['games_list', 'Jogos']]) %}
-{% set navbar = navbar|merge([['sessions_list', 'Partidas'], ['get_about', 'About']]) %}
+{#{% set navbar = navbar|merge([['sessions_list', 'Partidas'], ['get_about', 'About']]) %}#}
+{% set navbar = navbar|merge([['get_about', 'About']]) %}
 {% set active_page = active_page|default('index') %}
 
 <!DOCTYPE html>
