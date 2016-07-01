@@ -73,6 +73,7 @@ class MemberControllerProvider extends AbstractControllerProvider
 
     protected function prePersist(array &$data) {
         $data['affiliation'] = $data['affiliation']->format('Y-m-d');
+        unset($data['games']);
 
         if (isset($data['creation'])) {
             $data['creation'] = $data['creation']->format('Y-m-d');

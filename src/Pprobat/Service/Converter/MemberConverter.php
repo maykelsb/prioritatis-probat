@@ -41,6 +41,10 @@ DML;
         $member['games'] = [];
 
         foreach ($data as $_data) {
+            if (empty($_data['gameid'])) {
+                continue;
+            }
+
             $member['games'][] = [
                 'id' => $_data['gameid'],
                 'name' => $_data['gamename']

@@ -20,6 +20,22 @@ $app = new Silex\Application();
 $app['debug'] = true;
 
 // -- Providers
+$app->register(new \Silex\Provider\SecurityServiceProvider(), [
+    'security.firewalls' => [
+        'auth' => ['pattern' => '^/auth/'],
+        'secured' => [
+            'pattern' => '^.*$',
+            'form' => [
+                'login_path' => '/auth/login',
+                'check_path' => '/auth/check'
+            ],
+            'logout' => [
+                'logout_path' => '/auth/logout',
+                'invalidate_session' => true
+            ]
+        ]
+    ]
+]);
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\HttpFragmentServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), [
@@ -73,4 +89,5 @@ $app->mount('/', new Pprobat\Controller\HomeControllerProvider())
     ->mount('/games', new Pprobat\Controller\GameControllerProvider())
     ->mount('/about', new Pprobat\Controller\AboutControllerProvider())
     ->mount('/sessions', new Pprobat\Controller\SessionControllerProvider())
+    ->mount('/auth', new Pprobat\Controller\AuthControllerProvider())
     ->run();
