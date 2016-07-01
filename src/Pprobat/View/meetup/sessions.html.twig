@@ -6,7 +6,7 @@
             <dd>{{ session.game }}</dd>
             <dt>Designer:</dt>
             <dd>{{ session.designer }}</dd>
-            <dt>Jogadores:</dt>
+            <dt>Na mesa:</dt>
             <dd>
             {% if session.players is not empty %}
                 <ul>
@@ -20,5 +20,5 @@
         </dl>
     {% endfor %}
 {% else %}
-    {{ 'Nenhuma partida cadastrada.'|bt_alert('info') }}
+    {{ 'Nenhuma sessão cadastrada.'|bt_alert('info') }}
 {% endif %}
