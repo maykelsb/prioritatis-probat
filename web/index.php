@@ -27,12 +27,18 @@ $app->register(new \Silex\Provider\SecurityServiceProvider(), [
             'pattern' => '^.*$',
             'form' => [
                 'login_path' => '/auth/login',
-                'check_path' => '/auth/check'
+                'check_path' => '/check'
             ],
             'logout' => [
                 'logout_path' => '/auth/logout',
                 'invalidate_session' => true
+            ],
+            'users' => [
+                'admin@gmail.com' => ['ROLE_ADMIN', '$2y$10$3i9/lVd8UOFIJ6PAMFt8gu3/r5g0qeCJvoSlLCsvMTythye19F77a']
             ]
+//            'users' => function($app){
+//                return new \Pprobat\Service\UserProvider($app['db']);
+//            }
         ]
     ]
 ]);

@@ -9,16 +9,23 @@
  *
  * @link https://github.com/maykelsb/prioritatis-probat
  */
+namespace Pprobat\Service;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
     public function loadUserByUsername($username) {
+
+        die(var_dump($username));
+
         ;
     }
 
     public function supportsClass($class) {
+
+        die(var_dump($class));
+
         ;
     }
 
@@ -26,5 +33,5 @@ class UserProvider implements UserProviderInterface
         ;
     }
 
-    
+
 }

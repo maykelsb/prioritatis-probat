@@ -11,17 +11,34 @@
  */
 namespace Pprobat\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
+
 class AuthControllerProvider extends AbstractControllerProvider
 {
     protected function loginAction()
     {
-        $this->cc->get('/login', function(){
-            return $this->app['twig']->render('auth/login.html.twig');
+        $this->cc->get('/login', function(Request $request){
+            return $this->app['twig']->render('auth/login.html.twig', [
+                'error' => $this->app['security.last_error']($request),
+                'last_username' => $this->app['session']->get('_security.last_username')
+            ]);
         })->bind('auth_login');
+
         return $this;
     }
 
+    protected function checkAction()
+    {
+        $this->cc->get('/check', function(Request $request){
 
+            die(var_dump($request));
+
+//            return $this->app['twig']->render('auth/login.html.twig');
+        })->bind('auth_check');
+
+        return $this;
+    }
 
 
 
